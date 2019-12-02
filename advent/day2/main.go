@@ -51,29 +51,18 @@ func PartTwo() {
 						break
 					}
 
+					// Read instruction positions
+					pos1 := parts[currentOpcode+1]
+					pos2 := parts[currentOpcode+2]
+					sumPos := parts[currentOpcode+3]
+
+					// Read values
+					val1 := parts[pos1]
+					val2 := parts[pos2]
+
 					if parts[currentOpcode] == 1 {
-						// Addition
-						// Read addition value positions
-						pos1 := parts[currentOpcode+1]
-						pos2 := parts[currentOpcode+2]
-						sumPos := parts[currentOpcode+3]
-
-						// Read integer values
-						val1 := parts[pos1]
-						val2 := parts[pos2]
-
 						parts[sumPos] = val1 + val2
 					} else if parts[currentOpcode] == 2 {
-						// Multiplication
-						// Read multiplication value positions
-						pos1 := parts[currentOpcode+1]
-						pos2 := parts[currentOpcode+2]
-						sumPos := parts[currentOpcode+3]
-
-						// Read integer values
-						val1 := parts[pos1]
-						val2 := parts[pos2]
-
 						parts[sumPos] = val1 * val2
 					}
 
@@ -126,29 +115,18 @@ func PartOne() {
 				break
 			}
 
+			// Read instruction positions
+			pos1 := parts[currentOpcode+1]
+			pos2 := parts[currentOpcode+2]
+			sumPos := parts[currentOpcode+3]
+
+			// Read values
+			val1 := parts[pos1]
+			val2 := parts[pos2]
+
 			if parts[currentOpcode] == 1 {
-				// Addition
-				// Read addition value positions
-				pos1 := parts[currentOpcode+1]
-				pos2 := parts[currentOpcode+2]
-				sumPos := parts[currentOpcode+3]
-
-				// Read integer values
-				val1 := parts[pos1]
-				val2 := parts[pos2]
-
 				parts[sumPos] = val1 + val2
 			} else if parts[currentOpcode] == 2 {
-				// Multiplication
-				// Read multiplication value positions
-				pos1 := parts[currentOpcode+1]
-				pos2 := parts[currentOpcode+2]
-				sumPos := parts[currentOpcode+3]
-
-				// Read integer values
-				val1 := parts[pos1]
-				val2 := parts[pos2]
-
 				parts[sumPos] = val1 * val2
 			}
 
