@@ -21,6 +21,37 @@ func sliceAtoi(sa []string) ([]int, error) {
 	return si, nil
 }
 
+func runInstructions(pos1 int, pos2 int, parts []int) int {
+	currentOpcode := 0
+	parts[1] = pos1
+	parts[2] = pos2
+	for {
+		if parts[currentOpcode] == 99 {
+			break
+		}
+
+		// Read instruction positions
+		pos1 := parts[currentOpcode+1]
+		pos2 := parts[currentOpcode+2]
+		sumPos := parts[currentOpcode+3]
+
+		// Read values
+		val1 := parts[pos1]
+		val2 := parts[pos2]
+
+		if parts[currentOpcode] == 1 {
+			parts[sumPos] = val1 + val2
+		} else if parts[currentOpcode] == 2 {
+			parts[sumPos] = val1 * val2
+		}
+
+		// Move to next opcode
+		currentOpcode += 4
+	}
+
+	return parts[0]
+}
+
 func PartTwo() {
 	file, err := os.Open("advent/day2/input.dat")
 	if err != nil {
@@ -38,45 +69,16 @@ func PartTwo() {
 		if err != nil {
 			panic(err)
 		}
-		currentOpcode := 0
 
 		// Brute force
 		for i := 0; i < 100; i++ {
 			for j := 0; j < 100; j++ {
-				parts[1] = i
-				parts[2] = j
+				val := runInstructions(i, j, parts)
 
-				for {
-					if parts[currentOpcode] == 99 {
-						break
-					}
-
-					// Read instruction positions
-					pos1 := parts[currentOpcode+1]
-					pos2 := parts[currentOpcode+2]
-					sumPos := parts[currentOpcode+3]
-
-					// Read values
-					val1 := parts[pos1]
-					val2 := parts[pos2]
-
-					if parts[currentOpcode] == 1 {
-						parts[sumPos] = val1 + val2
-					} else if parts[currentOpcode] == 2 {
-						parts[sumPos] = val1 * val2
-					}
-
-					// Move 4 positions forward
-					currentOpcode += 4
-				}
-				// End opcode instructions
-				// Reset memory
-				if parts[0] == 19690720 {
+				if val == 19690720 {
 					fmt.Printf("Noun: %d, Verb: %d, Answer: %d", i, j, 100*i+j)
 				}
 
-				// Reset memory
-				currentOpcode = 0
 				parts, err = sliceAtoi(backupParts)
 				if err != nil {
 					panic(err)
@@ -107,34 +109,10 @@ func PartOne() {
 		if err != nil {
 			panic(err)
 		}
-		currentOpcode := 0
 
-		// Read [0], do calcs then move 4 positions forward to [4]
-		for {
-			if parts[currentOpcode] == 99 {
-				break
-			}
+		val := runInstructions(12, 2, parts)
 
-			// Read instruction positions
-			pos1 := parts[currentOpcode+1]
-			pos2 := parts[currentOpcode+2]
-			sumPos := parts[currentOpcode+3]
-
-			// Read values
-			val1 := parts[pos1]
-			val2 := parts[pos2]
-
-			if parts[currentOpcode] == 1 {
-				parts[sumPos] = val1 + val2
-			} else if parts[currentOpcode] == 2 {
-				parts[sumPos] = val1 * val2
-			}
-
-			// Move 4 positions forward
-			currentOpcode += 4
-		}
-
-		fmt.Println(parts[0])
+		fmt.Println(val)
 	}
 
 	if err := scanner.Err(); err != nil {
