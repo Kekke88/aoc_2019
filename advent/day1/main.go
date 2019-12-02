@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"bufio"
@@ -8,16 +8,8 @@ import (
 	"strconv"
 )
 
-func main() {
-	fmt.Println("Part 1")
-	partOne()
-
-	fmt.Println("Part 2")
-	partTwo()
-}
-
-func partTwo() {
-	file, err := os.Open("first.dat")
+func PartTwo() {
+	file, err := os.Open("advent/day1/first.dat")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,8 +50,8 @@ func partTwo() {
 	}
 }
 
-func partOne() {
-	file, err := os.Open("first.dat")
+func PartOne() {
+	file, err := os.Open("advent/day1/first.dat")
 	if err != nil {
 		log.Fatal(err)
 	}
