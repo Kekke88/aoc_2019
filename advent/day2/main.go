@@ -1,10 +1,8 @@
 package day2
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
+	"io/ioutil"
 	"strconv"
 	"strings"
 )
@@ -21,101 +19,54 @@ func sliceAtoi(sa []string) ([]int, error) {
 	return si, nil
 }
 
-func runInstructions(pos1 int, pos2 int, parts []int) int {
-	currentOpcode := 0
-	parts[1] = pos1
-	parts[2] = pos2
-	for {
-		if parts[currentOpcode] == 99 {
-			break
-		}
-
-		// Read instruction positions
-		pos1 := parts[currentOpcode+1]
-		pos2 := parts[currentOpcode+2]
-		sumPos := parts[currentOpcode+3]
-
-		// Read values
-		val1 := parts[pos1]
-		val2 := parts[pos2]
-
-		if parts[currentOpcode] == 1 {
-			parts[sumPos] = val1 + val2
-		} else if parts[currentOpcode] == 2 {
-			parts[sumPos] = val1 * val2
-		}
-
-		// Move to next opcode
-		currentOpcode += 4
-	}
-
-	return parts[0]
-}
-
 func PartTwo() {
-	file, err := os.Open("advent/day2/input.dat")
+	data, err := ioutil.ReadFile("advent/day2/input.dat")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+	backupParts := strings.Split(string(data), ",")
+	parts, err := sliceAtoi(backupParts)
+	if err != nil {
+		panic(err)
+	}
 
-	for scanner.Scan() {
-		v := scanner.Text()
+	// Brute force
+	for i := 0; i < 100; i++ {
+		for j := 0; j < 100; j++ {
+			elfComputer := create(parts)
+			elfComputer.SetMemState(1, i)
+			elfComputer.SetMemState(2, j)
+			elfComputer.Run()
 
-		backupParts := strings.Split(v, ",")
-		parts, err := sliceAtoi(backupParts)
-		if err != nil {
-			panic(err)
-		}
+			if elfComputer.Value() == 19690720 {
+				fmt.Printf("Noun: %d, Verb: %d, Answer: %d\n", i, j, 100*i+j)
+			}
 
-		// Brute force
-		for i := 0; i < 100; i++ {
-			for j := 0; j < 100; j++ {
-				val := runInstructions(i, j, parts)
-
-				if val == 19690720 {
-					fmt.Printf("Noun: %d, Verb: %d, Answer: %d", i, j, 100*i+j)
-				}
-
-				parts, err = sliceAtoi(backupParts)
-				if err != nil {
-					panic(err)
-				}
+			parts, err = sliceAtoi(backupParts)
+			if err != nil {
+				panic(err)
 			}
 		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
 	}
 }
 
 func PartOne() {
-	file, err := os.Open("advent/day2/input.dat")
+	data, err := ioutil.ReadFile("advent/day2/input.dat")
 	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		v := scanner.Text()
-
-		input := strings.Split(v, ",")
-		parts, err := sliceAtoi(input)
-		if err != nil {
-			panic(err)
-		}
-
-		val := runInstructions(12, 2, parts)
-
-		fmt.Println(val)
+		panic(err)
 	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+	input := strings.Split(string(data), ",")
+	parts, err := sliceAtoi(input)
+	if err != nil {
+		panic(err)
 	}
+
+	elfComputer := create(parts)
+	elfComputer.SetMemState(1, 12)
+	elfComputer.SetMemState(2, 2)
+	elfComputer.Run()
+
+	fmt.Println(elfComputer.Value())
 }
