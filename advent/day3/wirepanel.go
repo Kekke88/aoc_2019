@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+const DIRECTION_UP = "U"
+const DIRECTION_DOWN = "D"
+const DIRECTION_LEFT = "L"
+const DIRECTION_RIGHT = "R"
+
 type Vector2D struct {
 	X, Y int
 }
@@ -32,22 +37,22 @@ func (w *Wire) Trace() {
 	y := 0
 	for _, instruction := range w.Instructions {
 		switch instruction.Direction {
-		case "U":
+		case DIRECTION_UP:
 			for i := 0; i < instruction.Amount; i++ {
 				x++
 				w.Path = append(w.Path, Vector2D{x, y})
 			}
-		case "D":
+		case DIRECTION_DOWN:
 			for i := 0; i < instruction.Amount; i++ {
 				x--
 				w.Path = append(w.Path, Vector2D{x, y})
 			}
-		case "R":
+		case DIRECTION_RIGHT:
 			for i := 0; i < instruction.Amount; i++ {
 				y++
 				w.Path = append(w.Path, Vector2D{x, y})
 			}
-		case "L":
+		case DIRECTION_LEFT:
 			for i := 0; i < instruction.Amount; i++ {
 				y--
 				w.Path = append(w.Path, Vector2D{x, y})
@@ -63,7 +68,7 @@ func (w Wire) TracePoint(p Vector2D) int {
 
 	for _, instruction := range w.Instructions {
 		switch instruction.Direction {
-		case "U":
+		case DIRECTION_UP:
 			for i := 0; i < instruction.Amount; i++ {
 				x++
 				steps++
@@ -74,7 +79,7 @@ func (w Wire) TracePoint(p Vector2D) int {
 					return steps
 				}
 			}
-		case "D":
+		case DIRECTION_DOWN:
 			for i := 0; i < instruction.Amount; i++ {
 				x--
 				steps++
@@ -85,7 +90,7 @@ func (w Wire) TracePoint(p Vector2D) int {
 					return steps
 				}
 			}
-		case "R":
+		case DIRECTION_RIGHT:
 			for i := 0; i < instruction.Amount; i++ {
 				y++
 				steps++
@@ -96,7 +101,7 @@ func (w Wire) TracePoint(p Vector2D) int {
 					return steps
 				}
 			}
-		case "L":
+		case DIRECTION_LEFT:
 			for i := 0; i < instruction.Amount; i++ {
 				y--
 				steps++
