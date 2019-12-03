@@ -1,5 +1,7 @@
 package day2
 
+// Challenge URL: https://adventofcode.com/2019/day/2
+
 import (
 	"fmt"
 	"io/ioutil"

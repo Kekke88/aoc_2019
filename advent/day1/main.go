@@ -1,5 +1,7 @@
 package day1
 
+// Challenge URL: https://adventofcode.com/2019/day/1
+
 import (
 	"bufio"
 	"fmt"

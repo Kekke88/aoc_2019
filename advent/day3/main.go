@@ -1,21 +1,23 @@
 package day3
 
+// Challenge URL: https://adventofcode.com/2019/day/3
+
 import (
 	"fmt"
 )
 
 func PartTwo() {
-	w := create("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")
-	w.Trace()
+	firstWire := create("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")
+	firstWire.Trace()
 
-	w2 := create("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
-	w2.Trace()
+	secondWire := create("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
+	secondWire.Trace()
 
-	intersections := w.GetIntersections(w2)
+	intersections := firstWire.GetIntersections(secondWire)
 	shortestDistance := 0
 
 	for _, intersection := range intersections {
-		steps := w.TracePoint(intersection) + w2.TracePoint(intersection)
+		steps := firstWire.TracePoint(intersection) + secondWire.TracePoint(intersection)
 
 		if shortestDistance <= 0 || shortestDistance > steps {
 			shortestDistance = steps
@@ -26,13 +28,15 @@ func PartTwo() {
 }
 
 func PartOne() {
-	w := create("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")
-	w.Trace()
+	firstWire := create("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")
+	firstWire.Trace()
 
-	w2 := create("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
-	w2.Trace()
+	secondWire := create("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
+	secondWire.Trace()
 
-	intersections := w.GetIntersections(w2)
+	intersections := firstWire.GetIntersections(secondWire)
+
+	fmt.Println(intersections)
 
 	closestDistance := 0
 
