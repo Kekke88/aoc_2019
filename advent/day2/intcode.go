@@ -1,7 +1,9 @@
 package day2
 
+type RAM []int
+
 type IntcodeComputer struct {
-	Memory          []int
+	Memory          RAM
 	OperationOffset int
 }
 

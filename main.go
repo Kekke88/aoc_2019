@@ -3,6 +3,7 @@ package main
 import (
 	"aoc2019/advent/day1"
 	"aoc2019/advent/day2"
+	"aoc2019/advent/day3"
 	"fmt"
 )
 
@@ -16,4 +17,9 @@ func main() {
 	day2.PartOne()
 	fmt.Println("Day 2, part 2:")
 	day2.PartTwo()
+
+	fmt.Println("Day 3, part 1:")
+	day3.PartOne()
+	fmt.Println("Day 3, part 2:")
+	day3.PartTwo()
 }
